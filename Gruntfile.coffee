@@ -1,14 +1,18 @@
 # grunt.registerTask 'minify', ['newer:uglify:all']
 
 module.exports = (grunt) ->
-  # Load the plugin that provides the "uglify" task.
+  # Load the plugins
   grunt.loadNpmTasks 'grunt-contrib-clean'
 
   grunt.loadNpmTasks 'grunt-contrib-sass'
+  grunt.loadNpmTasks 'grunt-contrib-cssmin'
+
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
+
   grunt.loadNpmTasks 'grunt-contrib-jade'
 
-  grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-concat'
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
@@ -75,25 +79,39 @@ module.exports = (grunt) ->
         ],
         dest: '_build/application.js'
 
-    # UGLIFY
-    uglify:
-      options:
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n'
-
-      my_target:
+    # COPY
+    copy:
+      main:
         files: [
           expand: true
-          cwd: "_build/javascripts"
-          src: "**/*.js"
-          dest: "_build/javascripts"
-          ext: ".min.js"
+          cwd: '__src/images'
+          src: ['*']
+          dest: '_build/images'
         ]
 
-    # WATCH AND RECOMPILE
+    # CSS MIN
+    cssmin:
+      app:
+        files: [
+          src:  "_build/application.css"
+          dest: "_build/application.min.css"
+        ]
+
+    # UGLIFY
+    uglify:
+      app:
+        options:
+          banner: '/*! <%= pkg.name %> App: <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n'
+        files: [
+          src:  "_build/application.js"
+          dest: "_build/application.min.js"
+        ]
+
+    # WATCH NEW AND RECOMPILE
     watch:
       coffeescript:
         files: ["__src/javascripts/**/*.js.coffee"]
-        tasks: ["coffee", "concat:js"]
+        tasks: ["coffee", "concat:js", "uglify:app"]
       scss:
         files: ["__src/stylesheets/**/*.css.scss"]
         tasks: ["sass", "concat:css"]
@@ -104,9 +122,16 @@ module.exports = (grunt) ->
   # Default task(s)
   grunt.registerTask "default", [
     "clean"
+
     "sass"
     "coffee"
     "jade"
+
+    "copy:main"
+
     "concat:css"
     "concat:js"
+
+    "cssmin:app"
+    "uglify:app"
   ]
