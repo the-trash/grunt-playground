@@ -76,12 +76,12 @@ module.exports = (grunt) ->
             cwd:  '_src/assets/imgs'
             dest: 'build/assets/imgs'
           },{
-            src: ['**/*']
+            src: ['**/*', '!*.css.scss']
             expand: true
             cwd:  '_src/assets/css/vendors'
             dest: 'build/assets/css/vendors'
           },{
-            src: ['**/*']
+            src: ['**/*', '!*.js.coffee']
             expand: true
             cwd:  '_src/assets/js/vendors'
             dest: 'build/assets/js/vendors'
@@ -105,6 +105,7 @@ module.exports = (grunt) ->
       js:
         src: [
           'build/assets/js/vendors/jquery/jquery-2.1.1.js'
+          'build/assets/js/vendors/the_helpers.js'
           'build/assets/js/index.js'
         ],
         dest: 'build/assets/js/application.js'
