@@ -1,4 +1,4 @@
 (function() {
-  console.log('Hello from Index page!');
+  console.log('Grunt playground done');
 
 }).call(this);

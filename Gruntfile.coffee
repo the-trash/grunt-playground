@@ -129,13 +129,20 @@ module.exports = (grunt) ->
     # WATCH NEW AND RECOMPILE
     watch:
       coffeescript:
+        options:
+          livereload: 9000
+
         files: ["_src/assets/js/**/*.js.coffee"]
         tasks: [
           "coffee"
           "concat:js"
           # "uglify:app"
         ]
+
       scss:
+        options:
+          livereload: 9000
+
         files: ["_src/assets/css/**/*.css.scss"]
         tasks: [
           "sass"
@@ -143,6 +150,9 @@ module.exports = (grunt) ->
           # "cssmin:app"
         ]
       jade:
+        options:
+          livereload: 9000
+
         files: ["_src/**/*.html.jade"]
         tasks: ["jade"]
 
