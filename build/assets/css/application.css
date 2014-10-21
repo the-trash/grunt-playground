@@ -6202,7 +6202,23 @@ button.close {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 
-body {
-  padding: 10px;
-  border: 3px solid green;
+.map {
+  margin: 50px 0;
+  padding: 100px;
+  border: 1px solid gray;
+}
+
+#google_map {
+  height: 200px;
+  width: 200px;
+  border: 1px solid gray;
+}
+
+.label_class {
+  background: transparent;
+  text-align: center;
+  color: white;
+  width: 20px;
+  font-size: 11px;
+  font-family: Arial;
 }

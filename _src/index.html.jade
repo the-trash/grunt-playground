@@ -5,5 +5,10 @@ html(lang='ru')
     link(rel='stylesheet', href='./assets/css/application.css')
     script(type='text/javascript' src='./assets/js/application.js')
     script(type='text/javascript' src='http://localhost:9000/livereload.js')
+    script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCRaBh6UvqVRjILPDNwpZmamTkttZ6qvWU&sensor=false')
+    script(type='text/javascript' src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.10/src/markerwithlabel.js")
   body
-    h1 Grunt PlayGround
+    h1 Custom Map Markers
+
+    .map
+      #google_map

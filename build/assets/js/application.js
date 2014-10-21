@@ -9190,6 +9190,133 @@ return jQuery;
 }));
 
 (function() {
-  console.log('Grunt playground done');
+  this.log = function() {
+    try {
+      return console.log.apply(console, arguments);
+    } catch (_error) {}
+  };
+
+  this.trace_event = function(event_name, force) {
+    if (event_name == null) {
+      event_name = 'Undefined event';
+    }
+    if (force == null) {
+      force = false;
+    }
+    if (false || force) {
+      return log(event_name);
+    }
+  };
+
+  this.dec = function(val) {
+    return parseInt(val, 10);
+  };
+
+  this.to_int = function(val) {
+    return dec(val);
+  };
+
+  this.to_f = function(val) {
+    return parseFloat(val);
+  };
+
+  this.to_s = function(val) {
+    return val + '';
+  };
+
+  this._first = function(ary) {
+    return ary[0];
+  };
+
+  this._last = function(ary) {
+    return ary[ary.length - 1];
+  };
+
+  this.global_event = function(name, trace) {
+    if (trace == null) {
+      trace = false;
+    }
+    if (trace) {
+      log(name);
+    }
+    return $(document).trigger(name);
+  };
+
+  this.json2data = function(str, _default) {
+    var e;
+    if (_default == null) {
+      _default = [];
+    }
+    try {
+      return JSON.parse(str);
+    } catch (_error) {
+      e = _error;
+      log(str);
+      log("JSON parse error: " + e);
+      return _default;
+    }
+  };
+
+  this.data2json = function(data, _default) {
+    var e;
+    if (_default == null) {
+      _default = '[]';
+    }
+    try {
+      return JSON.stringify(data);
+    } catch (_error) {
+      e = _error;
+      log(data);
+      log("JSON stringify error: " + e);
+      return _default;
+    }
+  };
+
+}).call(this);
+
+(function() {
+  this.GMap = (function() {
+    return {
+      init: function() {
+        var map, mapCenter, mapOptions, marker_1, marker_2;
+        mapCenter = new google.maps.LatLng(-25.363882, 131.044922);
+        marker_1 = new google.maps.LatLng(-25.36, 131.06);
+        marker_2 = new google.maps.LatLng(-25.37, 131.04);
+        mapOptions = {
+          zoom: 12,
+          mapMaker: false,
+          panControl: false,
+          zoomControl: false,
+          scaleControl: false,
+          mapTypeControl: false,
+          streetViewControl: false,
+          center: mapCenter
+        };
+        map = new google.maps.Map(document.getElementById('google_map'), mapOptions);
+        new MarkerWithLabel({
+          labelContent: "1",
+          labelClass: "label_class",
+          labelAnchor: new google.maps.Point(10, 45),
+          map: map,
+          position: marker_1,
+          title: 'Marker 1',
+          icon: './assets/imgs/marker_wave.png'
+        });
+        return new MarkerWithLabel({
+          labelContent: "2",
+          labelClass: "label_class",
+          labelAnchor: new google.maps.Point(10, 45),
+          map: map,
+          position: marker_2,
+          title: 'Marker 2',
+          icon: './assets/imgs/marker_blue.png'
+        });
+      }
+    };
+  })();
+
+  $(function() {
+    return GMap.init();
+  });
 
 }).call(this);
