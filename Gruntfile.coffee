@@ -23,7 +23,7 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
 
     # CLEANUP
-    clean: ["_build"]
+    clean: ["build"]
 
     # SCSS
     sass:
@@ -33,9 +33,9 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          cwd: "__src/stylesheets"
+          cwd: "_src/assets/css"
           src: ["**/*.css.scss"]
-          dest: "_build/stylesheets"
+          dest: "build/assets/css"
           ext: ".css"
         ]
 
@@ -43,9 +43,9 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files: [
-          cwd: "__src/javascripts"
+          cwd: "_src/assets/js"
           src: ["**/*.js.coffee"]
-          dest: "_build/javascripts"
+          dest: "build/assets/js"
           expand: true
           ext: ".js"
         ]
@@ -58,43 +58,43 @@ module.exports = (grunt) ->
           pretty: true
 
         files: [
-          cwd: "__src"
+          cwd: "_src"
           src: ["**/*.html.jade"]
-          dest: "_build"
+          dest: "build"
           expand: true
           ext: ".html"
         ]
 
-    # CONCAT
+    # CONCAT + MANIFESTO
     concat:
       css:
         src: [
-          '_build/stylesheets/index.css'
+          'build/assets/css/index.css'
         ],
-        dest: '_build/application.css'
+        dest: 'build/assets/css/application.css'
 
       js:
         src: [
-          '_build/javascripts/index.js'
+          'build/assets/js/index.js'
         ],
-        dest: '_build/application.js'
+        dest: 'build/assets/js/application.js'
 
     # COPY
     copy:
       main:
         files: [
           expand: true
-          cwd: '__src/images'
+          cwd: '_src/assets/imgs'
           src: ['*']
-          dest: '_build/images'
+          dest: 'build/assets/imgs'
         ]
 
     # CSS MIN
     cssmin:
       app:
         files: [
-          src:  "_build/application.css"
-          dest: "_build/application.min.css"
+          src:  "build/assets/css/application.css"
+          dest: "build/assets/css/application.min.css"
         ]
 
     # UGLIFY
@@ -103,20 +103,20 @@ module.exports = (grunt) ->
         options:
           banner: '/*! <%= pkg.name %> App: <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n'
         files: [
-          src:  "_build/application.js"
-          dest: "_build/application.min.js"
+          src:  "build/assets/js/application.js"
+          dest: "build/assets/js/application.min.js"
         ]
 
     # WATCH NEW AND RECOMPILE
     watch:
       coffeescript:
-        files: ["__src/javascripts/**/*.js.coffee"]
+        files: ["_src/assets/js/**/*.js.coffee"]
         tasks: ["coffee", "concat:js", "uglify:app"]
       scss:
-        files: ["__src/stylesheets/**/*.css.scss"]
-        tasks: ["sass", "concat:css"]
+        files: ["_src/assets/css/**/*.css.scss"]
+        tasks: ["sass", "concat:css", "cssmin:app"]
       jade:
-        files: ["__src/**/*.html.jade"]
+        files: ["_src/**/*.html.jade"]
         tasks: ["jade"]
 
   # Default task(s)
