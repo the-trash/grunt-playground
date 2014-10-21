@@ -65,29 +65,48 @@ module.exports = (grunt) ->
           ext: ".html"
         ]
 
+    # COPY
+    copy:
+      main:
+        files: [
+          {
+            src: ['**/*']
+            expand: true
+            cwd:  '_src/assets/imgs'
+            dest: 'build/assets/imgs'
+          },{
+            src: ['**/*']
+            expand: true
+            cwd:  '_src/assets/css/vendors'
+            dest: 'build/assets/css/vendors'
+          },{
+            src: ['**/*']
+            expand: true
+            cwd:  '_src/assets/js/vendors'
+            dest: 'build/assets/js/vendors'
+          },{
+            src: ['**/*']
+            expand: true
+            cwd:  '_src/assets/vendors'
+            dest: 'build/assets/vendors'
+          }
+        ]
+
     # CONCAT + MANIFESTO
     concat:
       css:
         src: [
+          'build/assets/vendors/bootstrap-3.2.0/css/bootstrap.css'
           'build/assets/css/index.css'
         ],
         dest: 'build/assets/css/application.css'
 
       js:
         src: [
+          'build/assets/js/vendors/jquery/jquery-2.1.1.js'
           'build/assets/js/index.js'
         ],
         dest: 'build/assets/js/application.js'
-
-    # COPY
-    copy:
-      main:
-        files: [
-          expand: true
-          cwd: '_src/assets/imgs'
-          src: ['*']
-          dest: 'build/assets/imgs'
-        ]
 
     # CSS MIN
     cssmin:
@@ -97,7 +116,7 @@ module.exports = (grunt) ->
           dest: "build/assets/css/application.min.css"
         ]
 
-    # UGLIFY
+    # JS MIN (UGLIFY)
     uglify:
       app:
         options:
@@ -111,10 +130,18 @@ module.exports = (grunt) ->
     watch:
       coffeescript:
         files: ["_src/assets/js/**/*.js.coffee"]
-        tasks: ["coffee", "concat:js", "uglify:app"]
+        tasks: [
+          "coffee"
+          "concat:js"
+          # "uglify:app"
+        ]
       scss:
         files: ["_src/assets/css/**/*.css.scss"]
-        tasks: ["sass", "concat:css", "cssmin:app"]
+        tasks: [
+          "sass"
+          "concat:css"
+          # "cssmin:app"
+        ]
       jade:
         files: ["_src/**/*.html.jade"]
         tasks: ["jade"]
@@ -132,6 +159,6 @@ module.exports = (grunt) ->
     "concat:css"
     "concat:js"
 
-    "cssmin:app"
-    "uglify:app"
+    # "cssmin:app"
+    # "uglify:app"
   ]

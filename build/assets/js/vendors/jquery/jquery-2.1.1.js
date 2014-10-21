@@ -9188,8 +9188,3 @@ if ( typeof noGlobal === strundefined ) {
 return jQuery;
 
 }));
-
-(function() {
-  console.log('Hello from Index page!');
-
-}).call(this);
