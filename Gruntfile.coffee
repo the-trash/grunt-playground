@@ -15,6 +15,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-concat'
 
+  grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-newer'
 
@@ -156,8 +157,14 @@ module.exports = (grunt) ->
         files: ["_src/**/*.html.jade"]
         tasks: ["jade"]
 
-  # Default task(s)
-  grunt.registerTask "default", [
+    # WEB SERVER
+    connect:
+      server:
+        options:
+          port: 3000
+          base: 'build'
+
+  grunt.registerTask "first:processing", [
     "clean"
 
     "sass"
@@ -171,4 +178,11 @@ module.exports = (grunt) ->
 
     # "cssmin:app"
     # "uglify:app"
+  ]
+
+  # Default task(s)
+  grunt.registerTask "default", [
+    "first:processing"
+    "connect"
+    "watch"
   ]
